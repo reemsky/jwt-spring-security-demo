@@ -1,5 +1,7 @@
 package org.zerhusen.security.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +13,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerhusen.security.JwtAuthenticationRequest;
 import org.zerhusen.security.JwtTokenUtil;
 import org.zerhusen.security.JwtUser;
 import org.zerhusen.security.service.JwtAuthenticationResponse;
-
-import javax.servlet.http.HttpServletRequest;
 
 @RestController
 public class AuthenticationRestController {
@@ -37,7 +37,7 @@ public class AuthenticationRestController {
     @Autowired
     private UserDetailsService userDetailsService;
 
-    @RequestMapping(value = "${jwt.route.authentication.path}", method = RequestMethod.POST)
+    @PostMapping(value = "${jwt.route.authentication.path}")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtAuthenticationRequest authenticationRequest, Device device) throws AuthenticationException {
 
         // Perform the security
@@ -57,7 +57,7 @@ public class AuthenticationRestController {
         return ResponseEntity.ok(new JwtAuthenticationResponse(token));
     }
 
-    @RequestMapping(value = "${jwt.route.authentication.refresh}", method = RequestMethod.GET)
+    @GetMapping(value = "${jwt.route.authentication.refresh}")
     public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
         String token = request.getHeader(tokenHeader);
         String username = jwtTokenUtil.getUsernameFromToken(token);

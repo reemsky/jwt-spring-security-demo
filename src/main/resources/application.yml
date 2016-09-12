@@ -16,7 +16,19 @@ jwt:
     authentication:
       path: auth
       refresh: refresh
-
+  users:
+    - 
+      username: api
+      password: $2a$04$GoqF.O.UrB.QeLDqVbHeJubqf5JuWjE4LpOlc/s2LS1fCZ1J6hyaO
+      authorities: ROLE_USER
+        
+    - 
+      username: admin
+      password: $2a$04$Y/DPp3zZElMC8aXT.ARzWeSh.TeccKbZoCQJm73sUFe6dJ8097EXm
+      authorities: 
+       - ROLE_USER
+       - ROLE_ADMIN
+  
 #logging:
 #  level:
 #    org.springframework:

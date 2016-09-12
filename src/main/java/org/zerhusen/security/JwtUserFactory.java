@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.zerhusen.model.security.Authority;
 import org.zerhusen.model.security.User;
 
 public final class JwtUserFactory {
@@ -17,9 +16,9 @@ public final class JwtUserFactory {
         return new JwtUser(
                 user.getId(),
                 user.getUsername(),
-                user.getFirstname(),
-                user.getLastname(),
-                user.getEmail(),
+//                user.getFirstname(),
+//                user.getLastname(),
+//                user.getEmail(),
                 user.getPassword(),
                 mapToGrantedAuthorities(user.getAuthorities()),
                 user.getEnabled(),
@@ -27,9 +26,9 @@ public final class JwtUserFactory {
         );
     }
 
-    private static List<GrantedAuthority> mapToGrantedAuthorities(List<Authority> authorities) {
+    private static List<GrantedAuthority> mapToGrantedAuthorities(List<String> authorities) {
         return authorities.stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getName().name()))
+                .map(authority -> new SimpleGrantedAuthority(authority))
                 .collect(Collectors.toList());
     }
 }

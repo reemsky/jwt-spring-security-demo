@@ -18,9 +18,8 @@ running at [http://localhost:8080](http://localhost:8080).
 There are three user accounts present to demonstrate the different levels of access to the endpoints in
 the API and the different authorization exceptions:
 ```
-Admin - admin:admin
-User - user:password
-Disabled - disabled:password (this user is disabled)
+Admin - admin:adminkey
+Api - api:apikey
 ```
 
 There are three endpoints that are reasonable for the demo:

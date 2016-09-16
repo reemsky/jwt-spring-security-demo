@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.zerhusen.model.security.User;
 
-
 @ConfigurationProperties("jwt")
 @Configuration
 public class ConfigUsers {

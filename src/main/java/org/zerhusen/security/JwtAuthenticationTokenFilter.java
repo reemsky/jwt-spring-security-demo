@@ -28,20 +28,26 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
 
     @Value("${jwt.header}")
     private String tokenHeader;
-
+    
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) request;
-        String authToken = httpRequest.getHeader(this.tokenHeader);
+        FilteredRequest filtered = new FilteredRequest(httpRequest);
         HttpServletResponse resp =	(HttpServletResponse) response;
         
+        String authToken = httpRequest.getHeader(this.tokenHeader);
+        
+//        if (authToken!=null && authToken.startsWith("Bearer ")){
+//        	authToken = authToken.substring(7);
+//        }
+        
+        authToken = filtered.sanitize(authToken);
         resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
         resp.setHeader("Access-Control-Max-Age", "3600");
-        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        // authToken.startsWith("Bearer ")
-        // String authToken = header.substring(7);
+        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        
         String username = jwtTokenUtil.getUsernameFromToken(authToken);
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -53,6 +59,7 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
             }
         }
 
-        chain.doFilter(request, response);
+        chain.doFilter(filtered, response);
+        
     }
 }

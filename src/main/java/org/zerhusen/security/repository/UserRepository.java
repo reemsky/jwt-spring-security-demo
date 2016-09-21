@@ -1,8 +1,5 @@
 package org.zerhusen.security.repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.zerhusen.config.ConfigUsers;
@@ -25,15 +22,11 @@ public class UserRepository {
 	    	.findFirst().get();
 	    	
 		if (foundUser!=null) {
-			List<String> authList = new ArrayList<>();
-			authList.add("ROLE_USER");
 			user.setAuthorities(foundUser.getAuthorities());
 			user.setId(1L);
 			user.setEnabled(true);
 			user.setUsername(username);
 			user.setPassword(foundUser.getPassword());
-//			user.setFirstname(foundUser.getFirstname());
-//			user.setLastname(foundUser.getLastname());
 		}
 		return user;
 	}

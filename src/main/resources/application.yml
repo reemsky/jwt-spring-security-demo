@@ -34,19 +34,27 @@ jwt:
 #    org.springframework:
 #      security: DEBUG
 
+cfg:
+  db:
+    host: localhost
+    port: 3306
+    name: dbname
+    user: root
+    pass: 
+
+
 ---
 
 spring:
-   profiles.active: test
+   profiles.active: dev
 ---
    
 spring:
-  profiles: dev
-  
+  profiles: dev  
   datasource:
-    url: jdbc:mysql://localhost:3306/DB_NAME?useSSL=false
-    username: DB_USERS
-    password: DB_PASSWORD
+    url: jdbc:mysql://${cfg.db.host}:${cfg.db.port}/${cfg.db.name}?useSSL=false
+    username: ${cfg.db.user}
+    password: ${cfg.db.pass}
     testWhileIdle: true
     validationQuery: SELECT 1
   jpa:

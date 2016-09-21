@@ -1,5 +1,5 @@
 # JWT Spring Security Demo
-
+RUN: mvn spring-boot:run -Dcfg.db.host=hostname -Dcfg.db.name=dbname -Dcfg.db.user=dbuser -Dcfg.db.pass=dbpassword
 ![Screenshot from running application](etc/screenshot-jwt-spring-security-demo.png?raw=true "Screenshot JWT Spring Security Demo")
 
 ##About

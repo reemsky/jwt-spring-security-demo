@@ -14,8 +14,14 @@ This demo is build with with Maven and Java 1.8.
 Just start the application with the Spring Boot maven plugin (`mvn spring-boot:run`). The application is
 running at [http://localhost:8080](http://localhost:8080).
 
-RUN: mvn spring-boot:run -Dcfg.db.host=hostname -Dcfg.db.name=dbname -Dcfg.db.user=dbuser -Dcfg.db.pass=dbpassword
-
+MYSQL:
+```
+mvn spring-boot:run -Dcfg.db.host=hostname -Dcfg.db.name=dbname -Dcfg.db.user=dbuser -Dcfg.db.pass=dbpassword
+```
+MEMDB:
+```
+mvn spring-boot:run -Dspring.active.profiles=test
+```
 There are three user accounts present to demonstrate the different levels of access to the endpoints in
 the API and the different authorization exceptions:
 ```

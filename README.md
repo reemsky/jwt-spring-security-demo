@@ -20,7 +20,7 @@ mvn spring-boot:run -Dcfg.db.host=hostname -Dcfg.db.name=dbname -Dcfg.db.user=db
 ```
 MEMDB:
 ```
-mvn spring-boot:run -Dspring.active.profiles=test
+mvn spring-boot:run -Dspring.profiles.active=test
 ```
 There are three user accounts present to demonstrate the different levels of access to the endpoints in
 the API and the different authorization exceptions:

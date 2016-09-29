@@ -12,13 +12,14 @@ This demo is build with with Maven and Java 1.8.
 
 ##Usage
 Just start the application with the Spring Boot maven plugin (`mvn spring-boot:run`). The application is
-running at [http://localhost:8080](http://localhost:8080).
+running at [http://localhost:8080](http://localhost:8080). By default localhost MySSQL is configured (port 3306).
 
-MYSQL:
+MySQL:
 ```
-mvn spring-boot:run -Dcfg.db.host=hostname -Dcfg.db.name=dbname -Dcfg.db.user=dbuser -Dcfg.db.pass=dbpassword
+mvn spring-boot:run -Dcfg.db.name=dbname -Dcfg.db.user=dbuser -Dcfg.db.pass=dbpassword
+mvn spring-boot:run -Dcfg.db.host=hostname -Dcfg.db.port=port -Dcfg.db.name=dbname -Dcfg.db.user=dbuser -Dcfg.db.pass=dbpassword
 ```
-MEMDB:
+In memory DB:
 ```
 mvn spring-boot:run -Dspring.profiles.active=test
 ```

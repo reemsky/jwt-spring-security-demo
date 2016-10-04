@@ -12,7 +12,7 @@ This demo is build with with Maven and Java 1.8.
 
 ##Usage
 Just start the application with the Spring Boot maven plugin (`mvn spring-boot:run`). The application is
-running at [http://localhost:8080](http://localhost:8080). By default localhost MySSQL is configured (port 3306).
+running at [http://localhost:8080](http://localhost:8080). By default localhost MySQL is configured (port 3306).
 
 MySQL:
 ```

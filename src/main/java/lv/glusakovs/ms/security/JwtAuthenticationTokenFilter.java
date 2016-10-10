@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,9 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.filter.OncePerRequestFilter;
 
-public class JwtAuthenticationTokenFilter extends GenericFilterBean {
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -30,17 +28,13 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
     private String tokenHeader;
     
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-        HttpServletRequest httpRequest = (HttpServletRequest) request;
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
+    	HttpServletRequest httpRequest = (HttpServletRequest) request;
         FilteredRequest filtered = new FilteredRequest(httpRequest);
         HttpServletResponse resp =	(HttpServletResponse) response;
         
         String authToken = httpRequest.getHeader(this.tokenHeader);
-        
-//        if (authToken!=null && authToken.startsWith("Bearer ")){
-//        	authToken = authToken.substring(7);
-//        }
         
         authToken = filtered.sanitize(authToken);
         resp.setHeader("Access-Control-Allow-Origin", "*");
@@ -58,8 +52,6 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
-        chain.doFilter(filtered, response);
-        
-    }
+        filterChain.doFilter(filtered, response);
+	}
 }

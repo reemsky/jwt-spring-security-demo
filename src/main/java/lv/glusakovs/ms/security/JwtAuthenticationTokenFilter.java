@@ -30,11 +30,10 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
     @Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-    	HttpServletRequest httpRequest = (HttpServletRequest) request;
-        FilteredRequest filtered = new FilteredRequest(httpRequest);
+        FilteredRequest filtered = new FilteredRequest(request);
         HttpServletResponse resp =	(HttpServletResponse) response;
         
-        String authToken = httpRequest.getHeader(this.tokenHeader);
+        String authToken = request.getHeader(this.tokenHeader);
         
         authToken = filtered.sanitize(authToken);
         resp.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,7 +47,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
